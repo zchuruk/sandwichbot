@@ -21,6 +21,21 @@ class Sandwich(enum.IntEnum):
     BLT = 8
     PALL_MALL = 9
 
+def construct_sandwich_str(opt_output):
+    sandwich_choices = []
+    for i, val in enumerate(best_sandwiches):
+        if val == 1:
+            sandwich_choices.append(Sandwich(i))
+    len(sandwich_choices)
+
+    sandwich_choices_str = str(sandwich_choices[0])
+    for i, enum_val in enumerate(sandwich_choices[1:]):
+        if (i + 1) == len(sandwich_choices):
+            sandwich_choices_str += ' and'
+        sandwich_choices_str += ' '
+        sandwich_choices_str += str(enum_val)
+    return sandwich_choices_str
+
 def fd(deliciousness_value):
     # deliciousness function
     return 2 * deliciousness_value - 1
@@ -52,6 +67,7 @@ def satisfaction(x, D, H, R):
 
 def run_optimization(n, m, D, H, R):
     max_val = 0
+    best_sandwiches = np.zeros(len(Sandwich))
 
     for i in range(n):
         for j in range(n):
@@ -60,8 +76,11 @@ def run_optimization(n, m, D, H, R):
                 x[i] += 1
                 x[j] += 1
                 x[k] += 1
-                max_val = max(max_val, satisfaction(x, D, H, R))
-
+                satisfaction_val = satisfaction(x, D, H, R)
+                if satisfaction_val > max_val:
+                    best_sandwiches = x
+                    max_val = satisfaction_val
+    return best_sandwiches
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='A bot to select sandwiches.')
@@ -75,4 +94,7 @@ if __name__ == "__main__":
 
     D, H, R = make_taste_matrices(args.people)
 
-    run_optimization(args.num_sandwiches, len(args.people), D, H, R)
+    best_sandwiches = run_optimization(args.num_sandwiches, len(args.people), D, H, R)
+    sandwich_str = construct_sandwich_str(best_sandwiches)
+
+    print(f'Your optimal sandwiches are {sandwich_str}. Happy eatin!')
