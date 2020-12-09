@@ -26,6 +26,6 @@ class Sandwich(Enum):
   def from_name(name):
     for sandwich in Sandwich:
       for n in sandwich.names:
-        if (n.lower() == name.lower()):
+        if (n.lower().strip() == name.lower().strip()):
           return sandwich
     raise Exception("Bruh, this isn't 'Bite Me Sandwiches'! this is Gustavos")
