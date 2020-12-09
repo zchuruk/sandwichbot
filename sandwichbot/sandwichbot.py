@@ -3,6 +3,7 @@ import enum
 import math
 import numpy as np
 
+from taste_profile_maker import make_taste_matrices
 
 SIGMA_D = 1.0
 SIGMA_H = 1.0
@@ -72,10 +73,6 @@ if __name__ == "__main__":
     print(args.num_sandwiches)
     print(args.people)
 
-    # Pat's aggregation code
-    D = np.zeros(len(Sandwich))
-    H = np.zeros(len(Sandwich))
-    R = np.zeros(len(Sandwich))
+    D, H, R = make_taste_matrices(args.people)
 
     run_optimization(args.num_sandwiches, len(args.people), D, H, R)
-
