@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 from datetime import datetime
 
-from sandwiches import Sandwich
+from sandwich import Sandwich
 
 def history_filename(name):
   dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -44,5 +44,5 @@ def get_history_matrix(names, days):
   print(np.array(group_history))
 
 # init_history('zach')
-add_history('pat', 'Valencia')
+add_history('zach', 'Valencia')
 # get_history_matrix(['pat'], 2)

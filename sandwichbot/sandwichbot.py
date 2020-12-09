@@ -5,22 +5,11 @@ import math
 import numpy as np
 
 from taste_profile_maker import make_taste_matrices
+from sandwich import Sandwich
 
 SIGMA_D = 1.0
 SIGMA_H = 1.0
 SIGMA_R = 1.0
-
-class Sandwich(enum.IntEnum):
-    GUS_SPECIAL = 0
-    WILD_WEST = 1
-    VALENCIA = 2
-    PANHANDLE = 3
-    KEZAR = 4
-    QUAKE = 5
-    FLASHBACK_REUBEN = 6
-    MEATBALL = 7
-    BLT = 8
-    PALL_MALL = 9
 
 def fd(deliciousness_value):
     # deliciousness function
