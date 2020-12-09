@@ -38,7 +38,7 @@ def add_history(name, sando):
 def get_history_matrix(names, days):
   group_history = []
   for name in names:
-    history = pd.read_csv(f'{name}_history.csv')
+    history = pd.read_csv(history_filename(name))
     last_n_days = np.array(history.tail(days))
     group_history.append(last_n_days)
   print(np.array(group_history))
