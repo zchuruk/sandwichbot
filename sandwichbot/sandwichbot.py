@@ -1,4 +1,5 @@
 import argparse
+import copy
 import enum
 import math
 import numpy as np
@@ -21,24 +22,9 @@ class Sandwich(enum.IntEnum):
     BLT = 8
     PALL_MALL = 9
 
-def construct_sandwich_str(opt_output):
-    sandwich_choices = []
-    for i, val in enumerate(best_sandwiches):
-        if val == 1:
-            sandwich_choices.append(Sandwich(i))
-    len(sandwich_choices)
-
-    sandwich_choices_str = str(sandwich_choices[0])
-    for i, enum_val in enumerate(sandwich_choices[1:]):
-        if (i + 1) == len(sandwich_choices):
-            sandwich_choices_str += ' and'
-        sandwich_choices_str += ' '
-        sandwich_choices_str += str(enum_val)
-    return sandwich_choices_str
-
 def fd(deliciousness_value):
     # deliciousness function
-    return 2 * deliciousness_value - 1
+    return deliciousness_value
 
 def fh(heaviness_value):
     # heaviness function
@@ -65,22 +51,31 @@ def satisfaction(x, D, H, R):
     return S
 
 
-def run_optimization(n, m, D, H, R):
-    max_val = 0
-    best_sandwiches = np.zeros(len(Sandwich))
+def rec_optimize(x_curr, n, D, H, R, max_val_in, x_max_in):
+    x_max = x_max_in
+    max_val = max_val_in
+    for i in range(len(x_curr)):
+        x = copy.copy(x_curr)
+        x[i] += 1
+        if sum(x) == n:
+            val = satisfaction(x, D, H, R)
+            # print(val)
+            # print(x)
+            if val > max_val:
+                x_max = copy.copy(x)
+                max_val = val
+        else:
+            max_val, x_max = rec_optimize(x, n, D, H, R, max_val, x_max)
+    # print(max_val)
+    return max_val, x_max
 
-    for i in range(n):
-        for j in range(n):
-            for k in range(n):
-                x = np.zeros(len(Sandwich))
-                x[i] += 1
-                x[j] += 1
-                x[k] += 1
-                satisfaction_val = satisfaction(x, D, H, R)
-                if satisfaction_val > max_val:
-                    best_sandwiches = x
-                    max_val = satisfaction_val
-    return best_sandwiches
+def run_optimization(n, D, H, R):
+    x0 = np.zeros(len(Sandwich))
+    max_val = 0
+    x_max = x0
+
+    max_val, x_max = rec_optimize(x0, n, D, H, R, max_val, x_max)
+    return x_max
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='A bot to select sandwiches.')
@@ -89,12 +84,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    print(args.num_sandwiches)
-    print(args.people)
-
     D, H, R = make_taste_matrices(args.people)
 
-    best_sandwiches = run_optimization(args.num_sandwiches, len(args.people), D, H, R)
-    sandwich_str = construct_sandwich_str(best_sandwiches)
-
-    print(f'Your optimal sandwiches are {sandwich_str}. Happy eatin!')
+    best_sandwiches = run_optimization(args.num_sandwiches, D, H, R)
+    print(best_sandwiches)
