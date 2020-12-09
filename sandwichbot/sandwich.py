@@ -8,9 +8,9 @@ class Sandwich(Enum):
   KEZAR = (4, ['Kezar', 'kz'])
   QUAKE = (5, ['Quake', 'q'])
   FLASHBACK_REUBEN = (6, ['Flasback Reuben', 'fb'])
-  MEATBALL = (7, ['Meatball'])
-  BLT = (8, ['BLT'])
-  PALL_MALL = (9, ['Pall Mall'])
+  MEATBALL = (7, ['Meatball', 'mb'])
+  BLT = (8, ['BLT', '710', 'king street'])
+  PALL_MALL = (9, ['Pall Mall', 'aids'])
 
   def __init__(self, i, names):
     self.id = i

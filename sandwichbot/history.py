@@ -44,5 +44,5 @@ def get_history_matrix(names, days):
   print(np.array(group_history))
 
 # init_history('zach')
-add_history('zach', 'Valencia')
+add_history('zach', 'v')
 # get_history_matrix(['pat'], 2)
