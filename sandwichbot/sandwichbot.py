@@ -33,12 +33,11 @@ def fh(heaviness_value):
     b = 0.5 # x offset
     c = 0.2 # std dev
     d = 0 # y offset
-    return a * np.exp(-(x - b)**2 / (2 * c**2)) - d
+    return a * np.exp(-(x - b)**2 / (2 * c**2)) + d
 
 def fr(reliability_value):
     # reliability function
     return reliability_value
-
 
 def satisfaction(x, D, H, R):
     # optimization function
@@ -49,7 +48,6 @@ def satisfaction(x, D, H, R):
 
     S = SIGMA_D * fd(deliciousness_agg) + SIGMA_H * fh(heaviness_agg) + SIGMA_R * fr(reliability_agg)
     return S
-
 
 def rec_optimize(x_curr, n, D, H, R, max_val_in, x_max_in):
     x_max = x_max_in
@@ -71,7 +69,7 @@ def rec_optimize(x_curr, n, D, H, R, max_val_in, x_max_in):
 
 def run_optimization(n, D, H, R):
     x0 = np.zeros(len(Sandwich))
-    max_val = 0
+    max_val = -100
     x_max = x0
 
     max_val, x_max = rec_optimize(x0, n, D, H, R, max_val, x_max)
