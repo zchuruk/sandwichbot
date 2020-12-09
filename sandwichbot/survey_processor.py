@@ -3,7 +3,7 @@ import os
 import numpy as np
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-survey_path = os.path.join(dir_path, '../data/test_one_entry.csv')
+survey_path = os.path.join(dir_path, '../data/test_two_entries.csv')
 
 NUM_QUESTIONS = 8
 RESPONSE_PERSON = ['pat', 'jeremy', 'zach']
@@ -21,12 +21,13 @@ with open(survey_path) as f:
             person_responses.append(row)
         i += 1
 
-num_sando_types = (
+num_sando_types = int(
     (len(sando_type_row) - 3)
     / NUM_QUESTIONS
 )
 
-sando_types = sando_type_row[2:(2+num_sando_types)]
+end_index = 2 + num_sando_types
+sando_types = sando_type_row[2:end_index]
 
 global_taste_profile = {}
 

@@ -50,4 +50,4 @@ def make_taste_matrices(names):
 
 if __name__ == "__main__":
     d, h, r = make_taste_matrices(['pat', 'jeremy'])
-    print d, h, r
+    print(d, h, r)
