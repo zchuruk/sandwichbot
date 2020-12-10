@@ -28,4 +28,4 @@ class Sandwich(Enum):
       for n in sandwich.names:
         if (n.lower().strip() == name.lower().strip()):
           return sandwich
-    raise Exception("Bruh, this isn't 'Bite Me Sandwiches'! this is Gustavos")
+    raise Exception(f"Bruh, this isn't 'Bite Me Sandwiches'! this is Gustavos - '{name}' not found")
